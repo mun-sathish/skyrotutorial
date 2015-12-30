@@ -17,7 +17,7 @@ import sathish.skyrotutorial.R;
 public class IntroActivity extends AppCompatActivity {
 
     private ViewPager mViewPager;
-    ImageView image1, image2;
+    ImageView skyro, record, smallCard;
     int currentPage;
     Context context;
     int width, height;
@@ -30,8 +30,9 @@ public class IntroActivity extends AppCompatActivity {
 
         context = this;
 
-        image1 = (ImageView) findViewById(R.id.imagesat1);
-        image2 = (ImageView) findViewById(R.id.imagesat2);
+        skyro = (ImageView) findViewById(R.id.skyro);
+        record = (ImageView) findViewById(R.id.record);
+        smallCard = (ImageView) findViewById(R.id.small_card);
 
         width = getWidth(context);
         height = getHeight(context);
@@ -51,46 +52,86 @@ public class IntroActivity extends AppCompatActivity {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 //                Log.i("onPage","onPageScrolled **** "+position);
-//                Log.i("onPage","onPageScrolled **** "+positionOffset *95);
-                Log.i("onPage","onPageScrolled **** "+(width - positionOffsetPixels) + "   " + currentPage);
+//                Log.i("onPage","onPageScrolled **** "+positionOffset);
+                Log.i("onPage","onPageScrolled **** "+(positionOffset) + "   " + position);
 //                Log.i("onPage", "onPageScrolled **** " + currentPage);
 
 
-                // to fade away the element
-                image1.setAlpha(1.0f - positionOffset);
-                if (currentPage == 1 && positionOffset == 0.0f) image1.setAlpha(0.0f);
+//                // to fade away the element
+//                skyro.setAlpha(1.0f - positionOffset);
+//                if (currentPage == 1 && positionOffset == 0.0f) skyro.setAlpha(0.0f);
+//
+//
+//                // to move an object from one fragment to another
+//                if (currentPage == 1 && positionOffset == 0.0f) {
+//                    skyro.setTranslationX(195.0f);
+//                    skyro.setTranslationY(195.0f);
+//                } else {
+//                    skyro.setTranslationX(positionOffset * 195f);
+//                    skyro.setTranslationY(positionOffset * 195f);
+//                }
+//
+//
+//                // to keep object at other fragment
+//                if(currentPage == 0 && positionOffsetPixels == 0)
+//                {
+//                    record.setTranslationX(width);
+//                }
+//                else if(currentPage == 1 && positionOffsetPixels == 0)
+//                {
+//                    record.setTranslationX(0);
+//                }
+//                else
+//                {
+//                    record.setTranslationX(width - positionOffsetPixels);
+//                }
 
 
-                // to move an object from one fragment to another
-                if (currentPage == 1 && positionOffset == 0.0f) {
-                    image1.setTranslationX(195.0f);
-                    image1.setTranslationY(195.0f);
-                } else {
-                    image1.setTranslationX(positionOffset * 195f);
-                    image1.setTranslationY(positionOffset * 195f);
-                }
+                /***************************/
 
-                // to keep object at other fragment
+//                int skyroPosition = width * 0;
+//                int recordPosition = width * 1;
+//                int pausePosition = width * 2;
+
                 if(currentPage == 0 && positionOffsetPixels == 0)
                 {
-                    image2.setTranslationX(width);
+                    skyro.setTranslationX(width * 0);
+                    record.setTranslationX(width * 1);
+                    smallCard.setTranslationX(width * 2);
                 }
                 else if(currentPage == 1 && positionOffsetPixels == 0)
                 {
-                    image2.setTranslationX(0);
+                    skyro.setTranslationX(width * -1);
+                    record.setTranslationX(width * 0);
+                    smallCard.setTranslationX(width * 1);
                 }
-//                else if(currentPage == 1 && positionOffsetPixels >= 1)
-//                {
-
-//                }
-                else
+                else if(currentPage == 2 && positionOffsetPixels == 0)
                 {
-                    image2.setTranslationX(width - positionOffsetPixels);
+                    skyro.setTranslationX(width * -2);
+                    record.setTranslationX(width * -1);
+                    smallCard.setTranslationX(width * 0);
+                }
+//                else if((currentPage == 0 && positionOffsetPixels <= 360) ||
+//                        (currentPage == 1 && positionOffsetPixels > 360) )
+                else if(position == 0)
+                {
+                    record.setTranslationX( (width) - (positionOffsetPixels) );
+                    smallCard.setTranslationX( (width * 3) - (positionOffsetPixels + 720) );
+                }
+//                else if((currentPage == 1 && positionOffsetPixels <= 360) ||
+//                        (currentPage == 2 && positionOffsetPixels > 360) )
+                else if(position == 1)
+                {
+//                    record.setTranslationX( (width) + (positionOffsetPixels - 720) );
+                    record.setTranslationX(positionOffsetPixels / 360f);
+                    smallCard.setTranslationX( (width) - (positionOffsetPixels) );
+//                    Log.i("onPage", "" + ( (width) - (positionOffsetPixels) ));
                 }
 
-//                image2.
 
-//                Log.i("onPage", "" + width + "   " + height);
+
+
+//                    Log.i("onPage", "" + ( (width * 1) - (positionOffsetPixels + 0) ));
 
 
             }
