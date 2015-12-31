@@ -17,7 +17,7 @@ import sathish.skyrotutorial.R;
 public class IntroActivity extends AppCompatActivity {
 
     private ViewPager mViewPager;
-    ImageView skyro, record, smallCard;
+    ImageView skyro, record, bigCard;
     int currentPage;
     Context context;
     int width, height;
@@ -32,7 +32,7 @@ public class IntroActivity extends AppCompatActivity {
 
         skyro = (ImageView) findViewById(R.id.skyro);
         record = (ImageView) findViewById(R.id.record);
-        smallCard = (ImageView) findViewById(R.id.small_card);
+        bigCard = (ImageView) findViewById(R.id.big_card);
 
         width = getWidth(context);
         height = getHeight(context);
@@ -51,11 +51,10 @@ public class IntroActivity extends AppCompatActivity {
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//                Log.i("onPage","onPageScrolled **** "+position);
-//                Log.i("onPage","onPageScrolled **** "+positionOffset);
-                Log.i("onPage","onPageScrolled **** "+(positionOffset) + "   " + position);
-//                Log.i("onPage", "onPageScrolled **** " + currentPage);
 
+
+                Log.i("onPage","onPageScrolled **** \t\t\t" + position + "\t\t\t" + currentPage
+                        + "\t\t\t" + positionOffsetPixels + "\t\t\t" + positionOffset);
 
 //                // to fade away the element
 //                skyro.setAlpha(1.0f - positionOffset);
@@ -88,64 +87,59 @@ public class IntroActivity extends AppCompatActivity {
 
 
                 /***************************/
-
-//                int skyroPosition = width * 0;
-//                int recordPosition = width * 1;
-//                int pausePosition = width * 2;
-
-                if(currentPage == 0 && positionOffsetPixels == 0)
+                if(position == 0 && positionOffset == 0)
                 {
                     skyro.setTranslationX(width * 0);
                     record.setTranslationX(width * 1);
-                    smallCard.setTranslationX(width * 2);
+                    bigCard.setTranslationX(width * 2);
                 }
-                else if(currentPage == 1 && positionOffsetPixels == 0)
+                else if(position == 1 && positionOffset == 0)
                 {
-                    skyro.setTranslationX(width * -1);
+                    skyro.setTranslationX(0);
+                    skyro.setTranslationY(345f);
+//                    skyro.setTranslationX(width * -1);
                     record.setTranslationX(width * 0);
-                    smallCard.setTranslationX(width * 1);
+                    bigCard.setTranslationX(width * 1);
                 }
-                else if(currentPage == 2 && positionOffsetPixels == 0)
+                else if(position == 2 && positionOffset == 0)
                 {
                     skyro.setTranslationX(width * -2);
-                    record.setTranslationX(width * -1);
-                    smallCard.setTranslationX(width * 0);
+//                    record.setTranslationX(width * -1);
+                    bigCard.setTranslationX(width * 0);
                 }
 //                else if((currentPage == 0 && positionOffsetPixels <= 360) ||
 //                        (currentPage == 1 && positionOffsetPixels > 360) )
                 else if(position == 0)
                 {
+                    skyro.setTranslationX(positionOffset);
+                    skyro.setTranslationY(positionOffset * 345f);
+                    skyro.setAlpha(1.0f - positionOffset);
                     record.setTranslationX( (width) - (positionOffsetPixels) );
-                    smallCard.setTranslationX( (width * 3) - (positionOffsetPixels + 720) );
+                    bigCard.setTranslationX( (width * 3) - (positionOffsetPixels + 720) );
                 }
 //                else if((currentPage == 1 && positionOffsetPixels <= 360) ||
 //                        (currentPage == 2 && positionOffsetPixels > 360) )
                 else if(position == 1)
                 {
-//                    record.setTranslationX( (width) + (positionOffsetPixels - 720) );
-                    record.setTranslationX(positionOffsetPixels / 360f);
-                    smallCard.setTranslationX( (width) - (positionOffsetPixels) );
-//                    Log.i("onPage", "" + ( (width) - (positionOffsetPixels) ));
+                    record.setAlpha(1.0f - positionOffset);
+//                    record.setTranslationX(positionOffsetPixels);
+                    bigCard.setTranslationX( (width) - (positionOffsetPixels) );
                 }
-
-
-
-
-//                    Log.i("onPage", "" + ( (width * 1) - (positionOffsetPixels + 0) ));
-
+                else if(position == 2)
+                {
+                    bigCard.setAlpha(1.0f - positionOffset);
+                }
 
             }
 
+
             @Override
             public void onPageSelected(int position) {
-//                Log.i("onPage","onPageSelected **** "+position);
                 currentPage = position;
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
-//                Log.i("onPage","onPageScrollStateChanged **** "+state);
-
             }
         });
 
