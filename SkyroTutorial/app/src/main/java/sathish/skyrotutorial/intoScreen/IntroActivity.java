@@ -21,6 +21,7 @@ public class IntroActivity extends AppCompatActivity {
     int currentPage;
     Context context;
     int width, height;
+    public static final float SKYRO_TRANSLATING_Y = 345f;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +43,6 @@ public class IntroActivity extends AppCompatActivity {
         // Set an Adapter on the ViewPager
         mViewPager.setAdapter(new IntroAdapter(getSupportFragmentManager()));
 
-        // Set a PageTransformer
-        mViewPager.setPageTransformer(false, new IntroPageTransformer());
-
-
 
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -53,78 +50,43 @@ public class IntroActivity extends AppCompatActivity {
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
 
-                Log.i("onPage","onPageScrolled **** \t\t\t" + position + "\t\t\t" + currentPage
-                        + "\t\t\t" + positionOffsetPixels + "\t\t\t" + positionOffset);
-
-//                // to fade away the element
-//                skyro.setAlpha(1.0f - positionOffset);
-//                if (currentPage == 1 && positionOffset == 0.0f) skyro.setAlpha(0.0f);
-//
-//
-//                // to move an object from one fragment to another
-//                if (currentPage == 1 && positionOffset == 0.0f) {
-//                    skyro.setTranslationX(195.0f);
-//                    skyro.setTranslationY(195.0f);
-//                } else {
-//                    skyro.setTranslationX(positionOffset * 195f);
-//                    skyro.setTranslationY(positionOffset * 195f);
-//                }
-//
-//
-//                // to keep object at other fragment
-//                if(currentPage == 0 && positionOffsetPixels == 0)
-//                {
-//                    record.setTranslationX(width);
-//                }
-//                else if(currentPage == 1 && positionOffsetPixels == 0)
-//                {
-//                    record.setTranslationX(0);
-//                }
-//                else
-//                {
-//                    record.setTranslationX(width - positionOffsetPixels);
-//                }
-
-
-                /***************************/
+                //   exactly at fragment 1
                 if(position == 0 && positionOffset == 0)
                 {
-                    skyro.setTranslationX(width * 0);
-                    record.setTranslationX(width * 1);
+                    skyro.setTranslationX(0);
+                    record.setTranslationX(width);
                     bigCard.setTranslationX(width * 2);
                 }
+                // exactly at fragment 2
                 else if(position == 1 && positionOffset == 0)
                 {
                     skyro.setTranslationX(0);
-                    skyro.setTranslationY(345f);
-//                    skyro.setTranslationX(width * -1);
-                    record.setTranslationX(width * 0);
-                    bigCard.setTranslationX(width * 1);
+                    skyro.setTranslationY(SKYRO_TRANSLATING_Y);
+                    record.setTranslationX(0);
+                    bigCard.setTranslationX(width);
                 }
+                // exactly at fragment 3
                 else if(position == 2 && positionOffset == 0)
                 {
                     skyro.setTranslationX(width * -2);
-//                    record.setTranslationX(width * -1);
-                    bigCard.setTranslationX(width * 0);
+                    bigCard.setTranslationX(0);
                 }
-//                else if((currentPage == 0 && positionOffsetPixels <= 360) ||
-//                        (currentPage == 1 && positionOffsetPixels > 360) )
+                // scroll between fragment 1 & 2
                 else if(position == 0)
                 {
                     skyro.setTranslationX(positionOffset);
-                    skyro.setTranslationY(positionOffset * 345f);
+                    skyro.setTranslationY(positionOffset * SKYRO_TRANSLATING_Y);
                     skyro.setAlpha(1.0f - positionOffset);
                     record.setTranslationX( (width) - (positionOffsetPixels) );
-                    bigCard.setTranslationX( (width * 3) - (positionOffsetPixels + 720) );
+                    bigCard.setTranslationX( (width * 3) - (positionOffsetPixels + width) );
                 }
-//                else if((currentPage == 1 && positionOffsetPixels <= 360) ||
-//                        (currentPage == 2 && positionOffsetPixels > 360) )
+                // scroll between fragment 2 & 3
                 else if(position == 1)
                 {
                     record.setAlpha(1.0f - positionOffset);
-//                    record.setTranslationX(positionOffsetPixels);
                     bigCard.setTranslationX( (width) - (positionOffsetPixels) );
                 }
+                // scroll between fragment 3 & 4
                 else if(position == 2)
                 {
                     bigCard.setAlpha(1.0f - positionOffset);
